@@ -15,21 +15,16 @@ public class FrogRiverOne {
 		int checker = 0;
 
 		for (int i = 0 ; i<A.length; i++){
-
-			if (A[i] > X || B[A[i]-1] == EXITS) {
-				continue;
-			}
-
-			if (B[A[i]-1] != EXITS) {
+			if ( X >= A[i] && B[A[i]-1] != EXITS) {
 				B[A[i]-1] = EXITS;
 				checker++;
+				if (checker == X) {
+					System.out.println(i);
+					return i;
+				}
 			}
 
-			if (checker == X) {
-				return i;
-			}
 		}
-
 		return -1;
 	}
 }
