@@ -12,38 +12,43 @@ public class GenomicRangeQuery {
 
 	private static int[] solution(String S, int[] P, int[] Q) {
 		int[] result = new int[P.length];
-		char[] temp = new char[P.length];
 		char[] sa = S.toCharArray();
-		//char[][] saa = new char[sa.length][sa.length];
-		char min = 'Z';
-		//char temp;
+		int[] temp = new int[sa.length];
+		int[] temp2 = new int[P.length];
+		int tempInt = 0;
+		int oneChecker = 0;
 
+
+		for (int i = 0; i < sa.length; i++) {
+			tempInt += (int)sa[i];
+			tempInt -= 64;
+			temp[i] = tempInt;
+		}
 		for(int i = 0; i < P.length; i++) {
-			for(int j = P[i] ; j <= Q[i]; j++) {
-				if (sa[j] == 'A') {
-					min = sa[j];
-					break;
-				} else if (min > sa[j]) {
-					min = sa[j];
+			temp2[i] = temp[Q[i]] - temp[P[i]] + (int)sa[P[i]] - 64;
+			tempInt = temp2[i]%20;
+
+			if (tempInt == 0) {
+				result[i] = 4;
+			} else {
+				tempInt = tempInt % 7;
+				if (tempInt == 0) {
+					result[i] = 3;
+				} else {
+					tempInt = tempInt % 3;
+					if (tempInt == 0) {
+						result[i] = 2;
+					} else {
+						result[i] = 1;
+					}
 				}
 			}
-			temp[i] = min;
-			min = 'Z';
+
 		}
 
 
-//		for(int i = 0; i < sa.length; i++) {
-//			min = sa[i];
-//			for (int j = i; j < sa.length; j++) {
-//				if (sa[j] < min) {
-//					min = sa[j];
-//				}
-//				saa[i][j] = min;
-//			}
-//			min = 'Z';
-//		}
-//
-		for(int i = 0; i < P.length; i++) {
+
+/*		for(int i = 0; i < P.length; i++) {
 			//temp = saa[P[i]][Q[i]];
 
 			if (temp[i] == 'A') {
@@ -55,7 +60,7 @@ public class GenomicRangeQuery {
 			} else {
 				result[i]=4;
 			}
-		}
+		}*/
 
 		for (int i = 0 ; i < result.length ; i++) {
 			System.out.print(result[i]);
